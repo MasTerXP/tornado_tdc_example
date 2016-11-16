@@ -37,7 +37,7 @@ class TutorialGETHandler(tornado.web.RequestHandler):
 class TutorialPOSTHandler(tornado.web.RequestHandler):
     def post(self):
         message = json.loads(self.request.body)
-        print message.get('data')
+        print message['data']['username']
 
 def main():
     tornado.options.parse_command_line()
@@ -48,7 +48,7 @@ def main():
     ])
     http_server = tornado.httpserver.HTTPServer(application)
     http_server.listen(options.port)
-    print "Start Tornado server at Port:"+options.port
+    print "Start Tornado server at Port:"+str(options.port)
     tornado.ioloop.IOLoop.current().start()
 
 
