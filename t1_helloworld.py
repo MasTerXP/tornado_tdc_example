@@ -35,6 +35,7 @@ def main():
     ])
     http_server = tornado.httpserver.HTTPServer(application)
     http_server.listen(options.port)
+    print "Start Tornado server at Port:"+str(options.port)
     tornado.ioloop.IOLoop.current().start()
 
 

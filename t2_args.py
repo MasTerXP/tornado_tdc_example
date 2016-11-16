@@ -18,6 +18,7 @@ import tornado.httpserver
 import tornado.ioloop
 import tornado.options
 import tornado.web
+import json
 
 from tornado.options import define, options
 
@@ -28,18 +29,26 @@ class MainHandler(tornado.web.RequestHandler):
     def get(self):
         self.write("Hello, world")
 
-class StoryHandler(tornado.web.RequestHandler):
+class TutorialGETHandler(tornado.web.RequestHandler):
     def get(self, *args, **kwargs):
-        self.write("This is story")
+        input = kwargs.get('only_number')
+        self.write("This is number "+input)
+
+class TutorialPOSTHandler(tornado.web.RequestHandler):
+    def post(self):
+        message = json.loads(self.request.body)
+        print message.get('data')
 
 def main():
     tornado.options.parse_command_line()
     application = tornado.web.Application([
         (r"/", MainHandler),
-        (r"/story/(?P<story_id>[[0-9]+)", StoryHandler)
+        (r"/argument_get_tutorial/(?P<only_number>[[0-9]+)", TutorialGETHandler),
+        (r"/argument_post_tutorial", TutorialPOSTHandler)
     ])
     http_server = tornado.httpserver.HTTPServer(application)
     http_server.listen(options.port)
+    print "Start Tornado server at Port:"+options.port
     tornado.ioloop.IOLoop.current().start()
 
 
