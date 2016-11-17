@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<script src="jquery-3.1.1.min.js"></script>
+</head>
+<body>
+    Ajax call result = <span class="results"></span>
+</body>
+</html>
+<script>
+
+$(document).ready(function(){
+    $.ajax({
+        type: 'GET',
+        url: "http://localhost:8888",
+        success: function(response){
+            document.querySelector('.results').innerHTML = response.Data;
+        },
+        error: function(response){
+            document.querySelector('.results').innerHTML = response.Data;
+        }
+    });
+});
+</script>
